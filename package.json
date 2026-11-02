@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit",
     "test": "node scripts/check-workflows.mjs && powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/check-startup.ps1 && node scripts/check-cleanup.mjs",
     "test:ui": "npm run build && electron scripts/check-ui.cjs",
-    "release": "npm run build && electron-builder --win nsis --config.directories.output=release-luma"
+    "release": "npm run build && electron-builder --win nsis --publish never --config.directories.output=release-luma"
   },
   "build": {
     "appId": "local.trim",
