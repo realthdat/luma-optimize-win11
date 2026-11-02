@@ -1,0 +1,51 @@
+{
+  "name": "luma",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Luma - Windows maintenance, startup controls and disk cleanup.",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "check": "node scripts/check-catalog.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node scripts/check-workflows.mjs && powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/check-startup.ps1 && node scripts/check-cleanup.mjs",
+    "test:ui": "npm run build && electron scripts/check-ui.cjs",
+    "release": "npm run build && electron-builder --win nsis --config.directories.output=release-luma"
+  },
+  "build": {
+    "appId": "local.trim",
+    "productName": "Luma",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**",
+      "dist-electron/**"
+    ],
+    "extraResources": [
+      {
+        "from": "scripts/engine.ps1",
+        "to": "engine.ps1"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "requestedExecutionLevel": "asInvoker",
+      "signAndEditExecutable": false
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.3",
+    "vite-plugin-electron": "^0.29.0"
+  }
+}
